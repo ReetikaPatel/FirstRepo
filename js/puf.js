@@ -9,6 +9,7 @@ class PUF {
     this.deltas = [];
     this.id = PUF.count++;
     this.response = _.memoize(this.response, (challenge, position) => challenge.getValue().toString() + "|" + position).bind(this);
+    this.bigDeltas2 = [];
 
     if (fromDeltas) {
       for (let i=0; i<stages; i++) {
@@ -76,6 +77,7 @@ class PUF {
       return 0;
     }
     const bitValue = challenge.getBit(position);
+    //console.log("bitVlaue" + bitValue )
     if (bitValue === 0) {
       return this.response(challenge, position - 1) + this.getDelta0(position);
     } else if (bitValue === 1) {
@@ -109,4 +111,36 @@ class PUF {
   getDeltas() {
     return this.deltas.map(d => ({...d}));
   }
+
+
+  //
+  // alternate method for big delta
+  //
+  response2(challenge, position) {
+    if (position === 0) {
+      return 0;
+    }
+    const bitValue = challenge.getBit(position);
+    if (bitValue === 0) {
+      return this.bigDeltas2[position - 1] + this.getDelta0(position);
+    } else if (bitValue === 1) {
+      return (-1) * this.bigDeltas2[position - 1] + this.getDelta1(position);
+    } else {
+      throw new Error("something went wrong");
+    }
+  }
+
+
+
+
+  getBigDeltas2(challenge) {
+    this.bigDeltas2.push(0);
+    for (let position = 1; position <= this.stages; position++) {
+      let bigDelta = this.response2(challenge, position);
+      this.bigDeltas2.push(bigDelta);
+    }
+    return this.bigDeltas2;
+  }
+
+
 }
