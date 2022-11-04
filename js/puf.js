@@ -130,9 +130,6 @@ class PUF {
     }
   }
 
-
-
-
   getBigDeltas2(challenge) {
     this.bigDeltas2.push(0);
     for (let position = 1; position <= this.stages; position++) {
