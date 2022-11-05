@@ -1,5 +1,5 @@
 const N = 16 + 1;
-const STAGES = 4;
+const STAGES = 4 - changed on 6:45pm;
 const data = [];
 const side = 20;
 const width = side * N + 15, height = side * N;
