@@ -1,5 +1,5 @@
 const N = 16 + 1;
-const STAGES = 50;
+const STAGES = 4;  // new = 4, old = 50
 const data = [];
 const side = 20;
 const width = side * N + 15, height = side * N;
@@ -102,7 +102,16 @@ function main() {
   //   .attr("viewBox", [0, 0, width, height])
   //   .attr("stroke-width", 2);
 
-
+  let bigDeltas = []
+  let puf = app.pufs[15];
+  let chal = app.challenges[5];
+  bigDeltas = puf.getBigDeltas(chal);
+  console.log("bigDeltas");
+  console.log(bigDeltas);
+  let bigDeltas2 = []
+  bigDeltas2 = puf.getBigDeltas2(chal);
+  console.log("bigDeltas2");
+  console.log(bigDeltas2);
 
 
   // add the brush
@@ -137,6 +146,7 @@ function initPufs() {
     pufs.push(new PUF(STAGES));
   }
   app.pufs = pufs;
+  console.log(app.pufs);  //  new
 }
 
 function initChallenges() {
@@ -147,6 +157,9 @@ function initChallenges() {
     challenges.push(challenge);
   }
   app.challenges = challenges;
+
+  console.log("challenges");
+  console.log(app.challenges);
 }
 
 function groupChallenges(bitPosition) {
