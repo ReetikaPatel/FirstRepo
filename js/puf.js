@@ -115,6 +115,7 @@ class PUF {
 
   //
   // alternate method for big delta using  an array
+  // storing each return into an array
   //
   response2(challenge, position) {
     if (position === 0) {
